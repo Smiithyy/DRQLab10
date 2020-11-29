@@ -10,7 +10,7 @@ app.use(cors())
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.header("Access-Control-Allow-Headers",
+    res.header("Access-Control-Allow-Headers", 
         "Origin, X-Requested-With, Content-Type, Accept");
     next();
 })
@@ -69,6 +69,16 @@ app.get('/api/movies/:id', (req,res) => {
     MovieModel.findById(req.params.id, (err,data) => {
         res.json(data);
     })
+})
+
+app.put('/api/movies/:id', (req,res) => {
+    console.log("Update movie: " + req.params.id);
+    console.log(req.body);
+
+    MovieModel.findByIdAndUpdate(req.params.id, req.body, {new:true}, 
+        (err,data) => {
+            res.send(data);
+        })
 })
 
 app.post('/api/movies', (req, res) => {
